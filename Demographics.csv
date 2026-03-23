@@ -1,0 +1,121 @@
+,region_name,region_type,year,crime_viol_rt,hh_inc_med_adj,hh_u18_pct,pop_65p_pct,pop_num
+38,New York City,City,2023,5.3,"$79,480",25.3%,17.3%,"8,258,035"
+78,Manhattan,Borough,2023,5.5,"$104,910",16.2%,18.8%,1597451
+118,Bronx,Borough,2023,9.3,"$48,610",31.3%,15.3%,"1,356,476"
+158,Brooklyn,Borough,2023,4.6,"$79,830",25.9%,16.2%,2561225
+198,Queens,Borough,2023,4.0,"$85,040",27.6%,18.7%,2252196
+238,Staten Island,Borough,2023,2.7,"$99,170",33.1%,17.7%,"490,687"
+278,Greenwich Village/Financial District,Sub-Borough Area,2023,,"$206,490",16.5%,11.6%,"152,282"
+318,Lower East Side/Chinatown,Sub-Borough Area,2023,,"$56,550",11.4%,22.0%,148789
+358,Chelsea/Clinton/Midtown,Sub-Borough Area,2023,,"$127,380",10.0%,16.2%,"121,493"
+398,Stuyvesant Town/Turtle Bay,Sub-Borough Area,2023,,"$149,640",10.7%,20.3%,"211,155"
+438,Upper West Side,Sub-Borough Area,2023,,"$155,710",21.4%,20.2%,224282
+478,Upper East Side,Sub-Borough Area,2023,,"$165,280",14.8%,25.8%,198035
+518,Morningside Heights/Hamilton Heights,Sub-Borough Area,2023,,"$56,580",17.2%,18.7%,"109,668"
+558,Central Harlem,Sub-Borough Area,2023,,"$50,830",21.8%,14.0%,134774
+598,East Harlem,Sub-Borough Area,2023,,"$46,950",24.5%,16.5%,124169
+638,Washington Heights/Inwood,Sub-Borough Area,2023,,"$63,860",18.6%,18.0%,"172,804"
+678,Mott Haven/Hunts Point,Sub-Borough Area,2023,,"$35,230",32.3%,14.3%,"141,127"
+718,Morrisania/Belmont,Sub-Borough Area,2023,,"$32,020",32.7%,12.1%,165689
+758,Highbridge/South Concourse,Sub-Borough Area,2023,,"$39,380",29.0%,13.5%,"136,846"
+798,University Heights/Fordham,Sub-Borough Area,2023,,"$43,990",32.1%,10.8%,128490
+838,Kingsbridge Heights/Mosholu,Sub-Borough Area,2023,,"$36,070",31.1%,11.8%,106316
+878,Riverdale/Kingsbridge,Sub-Borough Area,2023,,"$78,070",31.0%,22.4%,"97,645"
+918,Soundview/Parkchester,Sub-Borough Area,2023,,"$47,330",35.4%,14.5%,"181,257"
+958,Throgs Neck/Co-op City,Sub-Borough Area,2023,,"$73,710",25.7%,19.9%,133004
+998,Pelham Parkway,Sub-Borough Area,2023,,"$61,110",29.0%,18.3%,"109,210"
+1038,Williamsbridge/Baychester,Sub-Borough Area,2023,,"$70,550",32.9%,17.5%,"156,892"
+1078,Williamsburg/Greenpoint,Sub-Borough Area,2023,,"$115,720",21.6%,8.9%,191029
+1118,Brooklyn Heights/Fort Greene,Sub-Borough Area,2023,,"$156,870",15.3%,12.5%,125285
+1158,Bedford Stuyvesant,Sub-Borough Area,2023,,"$78,040",26.9%,11.8%,"177,040"
+1198,Bushwick,Sub-Borough Area,2023,,"$81,430",12.4%,11.5%,"94,851"
+1238,East New York/Starrett City,Sub-Borough Area,2023,,"$51,220",33.3%,15.7%,190021
+1278,Park Slope/Carroll Gardens,Sub-Borough Area,2023,,"$165,910",26.3%,13.4%,"123,309"
+1318,Sunset Park,Sub-Borough Area,2023,,"$90,450",31.0%,16.3%,117774
+1358,North Crown Heights/Prospect Heights,Sub-Borough Area,2023,,"$94,980",20.6%,13.4%,107301
+1398,South Crown Heights,Sub-Borough Area,2023,,"$70,340",19.0%,18.3%,"97,430"
+1438,Bay Ridge,Sub-Borough Area,2023,,"$91,920",27.1%,19.6%,"126,771"
+1478,Bensonhurst,Sub-Borough Area,2023,,"$71,610",32.5%,18.3%,180729
+1518,Borough Park,Sub-Borough Area,2023,,"$69,730",41.3%,12.8%,"196,201"
+1558,Coney Island,Sub-Borough Area,2023,,"$43,000",19.8%,31.4%,"108,087"
+1598,Flatbush,Sub-Borough Area,2023,,"$82,330",26.8%,17.1%,153524
+1638,Sheepshead Bay/Gravesend,Sub-Borough Area,2023,,"$71,520",27.0%,19.9%,153388
+1678,Brownsville/Ocean Hill,Sub-Borough Area,2023,,"$43,460",28.4%,12.8%,"96,217"
+1718,East Flatbush,Sub-Borough Area,2023,,"$68,750",25.2%,18.8%,149035
+1758,Flatlands/Canarsie,Sub-Borough Area,2023,,"$91,530",28.3%,21.9%,173233
+1798,Astoria,Sub-Borough Area,2023,,"$87,800",19.6%,16.1%,206855
+1838,Sunnyside/Woodside,Sub-Borough Area,2023,,"$97,370",19.2%,13.0%,126577
+1878,Jackson Heights,Sub-Borough Area,2023,,"$77,930",31.3%,17.1%,165110
+1918,Elmhurst/Corona,Sub-Borough Area,2023,,"$73,470",31.1%,16.5%,155327
+1958,Middle Village/Ridgewood,Sub-Borough Area,2023,,"$87,150",28.4%,16.7%,177912
+1998,Rego Park/Forest Hills,Sub-Borough Area,2023,,"$95,200",22.6%,22.0%,112438
+2038,Flushing/Whitestone,Sub-Borough Area,2023,,"$64,670",26.0%,22.4%,241045
+2078,Hillcrest/Fresh Meadows,Sub-Borough Area,2023,,"$81,030",28.3%,21.3%,142031
+2118,Ozone Park/Woodhaven,Sub-Borough Area,2023,,"$103,090",32.4%,16.7%,133830
+2158,South Ozone Park/Howard Beach,Sub-Borough Area,2023,,"$92,520",30.6%,21.6%,117303
+2198,Bayside/Little Neck,Sub-Borough Area,2023,,"$111,690",25.5%,24.2%,116400
+2238,Jamaica,Sub-Borough Area,2023,,"$78,090",37.3%,15.6%,242984
+2278,Queens Village,Sub-Borough Area,2023,,"$107,220",29.5%,20.7%,197195
+2318,Rockaways,Sub-Borough Area,2023,,"$54,800",29.2%,20.7%,117189
+2358,North Shore,Sub-Borough Area,2023,,"$75,600",33.3%,15.9%,167916
+2398,Mid-Island,Sub-Borough Area,2023,,"$100,130",29.2%,19.1%,142150
+2438,South Shore,Sub-Borough Area,2023,,"$116,780",35.9%,18.4%,180621
+2463,Financial District,Community District,2023,3.7,,,,
+2488,Greenwich Village/Soho,Community District,2023,6.4,,,,
+2513,Lower East Side/Chinatown,Community District,2023,5.3,,,,
+2538,Clinton/Chelsea,Community District,2023,6.0,,,,
+2563,Midtown,Community District,2023,15.9,,,,
+2588,Stuyvesant Town/Turtle Bay,Community District,2023,2.2,,,,
+2613,Upper West Side,Community District,2023,2.4,,,,
+2638,Upper East Side,Community District,2023,1.8,,,,
+2663,Morningside Heights/Hamilton,Community District,2023,6.2,,,,
+2688,Central Harlem,Community District,2023,8.5,,,,
+2713,East Harlem,Community District,2023,10.4,,,,
+2738,Washington Heights/Inwood,Community District,2023,5.6,,,,
+2763,Mott Haven/Melrose,Community District,2023,16.8,,,,
+2788,Hunts Point/Longwood,Community District,2023,15.0,,,,
+2813,Morrisania/Crotona,Community District,2023,12.2,,,,
+2838,Highbridge/Concourse,Community District,2023,11.2,,,,
+2863,Fordham/University Heights,Community District,2023,9.3,,,,
+2888,Belmont/East Tremont,Community District,2023,13.1,,,,
+2913,Kingsbridge Heights/Bedford,Community District,2023,7.9,,,,
+2938,Riverdale/Fieldston,Community District,2023,3.1,,,,
+2963,Parkchester/Soundview,Community District,2023,7.3,,,,
+2988,Throgs Neck/Co-op City,Community District,2023,3.7,,,,
+3013,Morris Park/Bronxdale,Community District,2023,5.6,,,,
+3038,Williamsbridge/Baychester,Community District,2023,8.3,,,,
+3063,Greenpoint/Williamsburg,Community District,2023,3.5,,,,
+3088,Fort Greene/Brooklyn Heights,Community District,2023,5.9,,,,
+3113,Bedford Stuyvesant,Community District,2023,6.4,,,,
+3138,Bushwick,Community District,2023,7.1,,,,
+3163,East New York/Starrett City,Community District,2023,9.0,,,,
+3188,Park Slope/Carroll Gardens,Community District,2023,3.1,,,,
+3213,Sunset Park,Community District,2023,3.3,,,,
+3238,Crown Heights/Prospect Heights,Community District,2023,6.2,,,,
+3263,South Crown Heights/Lefferts Gardens,Community District,2023,4.8,,,,
+3288,Bay Ridge/Dyker Heights,Community District,2023,1.6,,,,
+3313,Bensonhurst,Community District,2023,1.9,,,,
+3338,Borough Park,Community District,2023,1.5,,,,
+3363,Coney Island,Community District,2023,5.1,,,,
+3388,Flatbush/Midwood,Community District,2023,3.2,,,,
+3413,Sheepshead Bay,Community District,2023,2.5,,,,
+3438,Brownsville,Community District,2023,9.7,,,,
+3463,East Flatbush,Community District,2023,5.9,,,,
+3488,Flatlands/Canarsie,Community District,2023,3.0,,,,
+3513,Astoria,Community District,2023,3.9,,,,
+3538,Woodside/Sunnyside,Community District,2023,3.7,,,,
+3563,Jackson Heights,Community District,2023,4.6,,,,
+3588,Elmhurst/Corona,Community District,2023,6.5,,,,
+3613,Ridgewood/Maspeth,Community District,2023,2.9,,,,
+3638,Rego Park/Forest Hills,Community District,2023,1.4,,,,
+3663,Flushing/Whitestone,Community District,2023,2.9,,,,
+3688,Hillcrest/Fresh Meadows,Community District,2023,2.3,,,,
+3713,Kew Gardens/Woodhaven,Community District,2023,3.6,,,,
+3738,South Ozone Park/Howard Beach,Community District,2023,4.5,,,,
+3763,Bayside/Little Neck,Community District,2023,1.3,,,,
+3788,Jamaica/Hollis,Community District,2023,6.3,,,,
+3813,Queens Village,Community District,2023,3.0,,,,
+3838,Rockaway/Broad Channel,Community District,2023,4.2,,,,
+3863,St. George/Stapleton,Community District,2023,4.7,,,,
+3888,South Beach/Willowbrook,Community District,2023,1.7,,,,
+3913,Tottenville/Great Kills,Community District,2023,1.1,,,,
