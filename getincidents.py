@@ -5,9 +5,9 @@ import time
 import os
 import pyarrow
 
-USER = "mge9dn@virginia.edu"
-PASS = "NnU030605030605"
-MyAppToken = "okyJkohbe1GifeURdORp8xuQm"
+USER = " "
+PASS = " "
+MyAppToken = " "
 
 
 # Logging setup

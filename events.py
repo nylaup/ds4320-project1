@@ -4,9 +4,9 @@ from sodapy import Socrata
 import logging
 import time 
 
-USER = "mge9dn@virginia.edu"
-PASS = "NnU030605030605"
-MyAppToken = "okyJkohbe1GifeURdORp8xuQm"
+USER = " "
+PASS = " "
+MyAppToken = " "
 
 # --- Logging ---
 logging.basicConfig(
