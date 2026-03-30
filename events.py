@@ -1,14 +1,57 @@
+import os
+import pandas as pd
+from sodapy import Socrata
+import logging
 
-import pandas as pd 
+USER = " "
+PASS = " "
+MyAppToken = " "
 
-#Events info file downloaded from https://data.cityofnewyork.us/City-Government/NYC-Permitted-Event-Information-Historical/bkfu-528j/about_data
-#  selecting information from specific time period 
-df = pd.read_csv("NYC_Permitted_Event_Information_-_Historical_20260322.csv")
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(levelname)s - %(message)s',
+    filename='events.log'
+)
+logger = logging.getLogger(__name__)
 
-events = df.loc[:,['Event ID', 'Start Date/Time', 'End Date/Time', 'Event Type', 'Event Borough']]
+client = Socrata(
+    "data.cityofnewyork.us",
+    MyAppToken,
+    username=USER,
+    password=PASS
+)
 
-#convert start and end times to pd datetime
-events['Start Date/Time'] = pd.to_datetime(events['Start Date/Time'], format="%m/%d/%Y %I:%M:%S %p")
-events['End Date/Time'] = pd.to_datetime(events['End Date/Time'], format="%m/%d/%Y %I:%M:%S %p")
+START_DATE = "2016-01-01T00:00:00"
+END_DATE   = "2019-12-31T23:59:59"
 
-events.to_csv('Events.csv')
+
+def get_nyc_events():
+    try:
+        logger.info("Fetching NYC Events data...")
+        results = client.get(
+            "bkfu-528j",
+            where=f"start_date_time >= '{START_DATE}' AND start_date_time <= '{END_DATE}'",
+            limit=500000  # well above expected count
+        )
+
+        df = pd.DataFrame.from_records(results)
+        logger.info(f"Fetched {df.shape[0]:,} rows")
+
+        df = df[['event_id', 'start_date_time', 'end_date_time',
+                 'event_type', 'event_borough', 'event_name']]
+
+        df['start_date_time'] = pd.to_datetime(df['start_date_time'])
+        df['end_date_time']   = pd.to_datetime(df['end_date_time'])
+
+        df.to_parquet('data/NYC_Events.parquet', index=False)
+
+        file_size_mb = os.path.getsize('data/NYC_Events.parquet') / (1024 ** 2)
+        logger.info(f"Events saved: {df.shape[0]:,} rows | {df.shape[1]} cols | {file_size_mb:.2f} MB")
+
+    except Exception as e:
+        logger.error(f"Error fetching Events data: {e}")
+        print(f"Error fetching Events data: {e}")
+
+
+if __name__ == "__main__":
+    get_nyc_events()

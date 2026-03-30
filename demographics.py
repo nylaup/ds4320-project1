@@ -1,33 +1,51 @@
 import pandas as pd 
+import duckdb
+import logging
+import time
 
-#Neighborhood demographics file downloaded from https://www.furmancenter.org/data-tools-resources/data-tools-data-downloads/ 
-#  then converted from xlsx to csv
-df = pd.read_csv("Neighorhood_Indicators_CoreDataDownload_2025-05-15.csv")
-
-neighborhood = df.loc[:,['region_name', 'region_type', 'year', 'crime_viol_rt', 'hh_inc_med_adj', 
-    'hh_u18_pct', 'pop_65p_pct', 'pop_num']]
-
-#only take recent demographics
-neighborhood = neighborhood[neighborhood['year']=='2023']
-
-#drop unneccesary characters 
-neighborhood["hh_inc_med_adj"] = (
-    neighborhood["hh_inc_med_adj"]
-    .str.replace("$", "", regex=False)
-    .str.replace(",", "", regex=False)
-    .astype(float)
+logging.basicConfig(
+    level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s',
+    filename='dem.log'
 )
+logger = logging.getLogger(__name__)
 
-neighborhood["hh_u18_pct"] = (
-    neighborhood["hh_u18_pct"]
-    .str.replace("%", "", regex=False)
-    .astype(float)
-)
+try: 
+    #Neighborhood demographics file downloaded from https://www.furmancenter.org/data-tools-resources/data-tools-data-downloads/ 
+    #  then converted from xlsx to csv
+    logger.info("Reading demographics data from CSV...")
+    df = pd.read_csv("data/Neighorhood_Indicators_CoreDataDownload_2025-05-15.csv")
 
-neighborhood["pop_65p_pct"] = (
-    neighborhood["pop_65p_pct"]
-    .str.replace("%", "", regex=False)
-    .astype(float)
-)
+    neighborhood = df.loc[:,['region_name', 'year', 'crime_viol_rt', 'hh_inc_med_adj', 
+        'hh_u18_pct', 'pop_65p_pct', 'pop_num']]
 
-neighborhood.to_csv('Demographics.csv')
+    #only take relevant demographics
+    neighborhood['year'] = pd.to_numeric(neighborhood['year'], errors='coerce')
+    neighborhood = neighborhood[(neighborhood['year'] == 2016)]
+
+    logger.info(f"Converting data types")
+    #drop unneccesary characters 
+    neighborhood["hh_inc_med_adj"] = (
+        neighborhood["hh_inc_med_adj"]
+        .str.replace("$", "", regex=False)
+        .str.replace(",", "", regex=False)
+        .astype(float)
+    )
+
+    neighborhood["hh_u18_pct"] = (
+        neighborhood["hh_u18_pct"]
+        .str.replace("%", "", regex=False)
+        .astype(float)
+    )
+
+    neighborhood["pop_65p_pct"] = (
+        neighborhood["pop_65p_pct"]
+        .str.replace("%", "", regex=False)
+        .astype(float)
+    )
+
+    neighborhood.to_parquet('data/Demographics.parquet', index=False)
+    logger.info(f"Created parquet file for demographics data")
+
+except Exception as e:
+        logger.error(f"Failed to read demographics data: {e}")
+        print(f"Failed to read demographics data: {e}")
