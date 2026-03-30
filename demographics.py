@@ -20,7 +20,7 @@ try:
 
     #only take relevant demographics
     neighborhood['year'] = pd.to_numeric(neighborhood['year'], errors='coerce')
-    neighborhood = neighborhood[(neighborhood['year'] == 2016)]
+    neighborhood = neighborhood[neighborhood['year'] == 2016]
 
     logger.info(f"Converting data types")
     #drop unneccesary characters 
@@ -42,9 +42,11 @@ try:
         .str.replace("%", "", regex=False)
         .astype(float)
     )
+    neighborhood["pop_num"] = neighborhood["pop_num"].str.replace(",", "", regex=False).astype(float)
+    neighborhood = neighborhood.drop_duplicates(subset=['region_name', 'year'], keep='first')
 
-    neighborhood.to_parquet('data/Demographics.parquet', index=False)
-    logger.info(f"Created parquet file for demographics data")
+    neighborhood.to_csv('data/Demographics.csv', index=False)
+    logger.info(f"Created csv file for demographics data")
 
 except Exception as e:
         logger.error(f"Failed to read demographics data: {e}")

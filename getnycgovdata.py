@@ -3,10 +3,11 @@ from sodapy import Socrata
 import logging
 import time
 import os
+import pyarrow
 
-USER = " "
-PASS = " "
-MyAppToken = " "
+USER = "mge9dn@virginia.edu"
+PASS = "NnU030605030605"
+MyAppToken = "okyJkohbe1GifeURdORp8xuQm"
 
 logging.basicConfig(
     level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s',
@@ -75,7 +76,7 @@ def paginate_to_parquet(dataset_id, where_clause, label, columns, output_path, d
     # Combine all parts into final parquet
     logger.info(f"[{label}] Combining {len(part_files)} parts...")
     combined = pd.concat([pd.read_parquet(f) for f in part_files], ignore_index=True)
-    combined.to_parquet(output_path, index=False)
+    combined.to_parquet(output_path, index=False, engine='pyarrow')
 
     # Clean up part files
     for f in part_files:
@@ -92,11 +93,11 @@ def _write_chunk(buffer, columns, datetime_cols, path):
     df = df[existing_cols]
 
     if datetime_cols:
-        for col, fmt in datetime_cols.items():
+        for col in datetime_cols.items():
             if col in df.columns:
-                df[col] = pd.to_datetime(df[col], format=fmt, errors='coerce')
+                df[col] = pd.to_datetime(df[col], errors='coerce')
 
-    df.to_parquet(path, index=False)
+    df.to_parquet(path, index=False, engine='pyarrow')
     logger.info(f"Chunk written to {path}: {df.shape[0]} rows")
 
 

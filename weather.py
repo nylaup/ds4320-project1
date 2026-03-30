@@ -20,7 +20,7 @@ BOROUGH_COORDS = {
 
 #set timeframe 
 START_DATE = "2016-01-01"
-END_DATE   = "2019-12-31"
+END_DATE   = "2017-12-31"
 
 #empty dataframe
 weather_dfs = []
@@ -62,4 +62,4 @@ for borough, (lat, lon) in BOROUGH_COORDS.items():
 weather_df = pd.concat(weather_dfs, ignore_index=True)
 weather_df.index.name = "weather_id" 
 
-weather_df.to_parquet('data/Weather.parquet')
+weather_df.to_csv('data/Weather.csv', index=False)
