@@ -1,5 +1,5 @@
 # DS 4320 Project 1: EMS Demand Prediction
-This repository contains materials for a project for DS4320 Data by Design on predicting and allocating emergency response resources.    
+This repository contains materials for a project for DS4320 Data by Design on predicting ambulance demand for allocating emergency response resources.    
 Name: Nyla Upal      
 NetID: mge9dn     
 DOI: [![DOI](https://zenodo.org/badge/1188435188.svg)](https://doi.org/10.5281/zenodo.19343840)      
