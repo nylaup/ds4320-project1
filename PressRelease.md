@@ -3,3 +3,4 @@
 ## Often ambulances are dispatched from rescue squad stations, which often leads to late arrivals to the scene, but sometimes are at locations where events are planned or expected in case of need. The problem is that ambulances often have to face traffic and great distances from events to get where they need to get, and if they were able to be strategically placed to predict where they will be most needed, this could improve efficiency. 
 ## (NNU FIX) This solution proposes using predictive algorithms based on information from prior incidences to better allocate ambulances to prepare for potential events based on time, dates, weather, location, and people. 
 ## Chart 
+![Map](images/map.png)
