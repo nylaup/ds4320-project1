@@ -96,10 +96,13 @@ con.close()
 ```
 ## Solution Analysis
 ```
+from sklearn.model_selection import GridSearchCV
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.metrics import mean_squared_error
+```
 
+```
 #drop target variable from X and save in y 
 X = df.drop(columns=["total_calls", "date"])
 y = df["total_calls"]
@@ -123,9 +126,37 @@ print(f"Mean Squared Error: {mse}")
 r2 = model.score(X_test, y_test)
 print(f"R^2: {r2}")
 ```
+
+```
+#create param grid for hyperparameter tuning with gridsearch 
+param_grid = {
+    'max_depth': [None, 10, 20],
+    'max_features': [2, 3, 4]
+}
+
+#gridsearch to find optimal hyperparameters 
+grid_search = GridSearchCV(
+    estimator=RandomForestRegressor(random_state=42),
+    param_grid=param_grid,
+    cv=5, 
+    scoring='neg_mean_squared_error'
+)
+
+grid_search.fit(X_train, y_train)
+print("Best parameters:", grid_search.best_params_)
+
+#evaluate best parameters on test set 
+best_model = grid_search.best_estimator_
+y_pred = best_model.predict(X_test)
+
+mse = mean_squared_error(y_test, y_pred)
+r2 = best_model.score(X_test, y_test)
+print(f"Mean Squared Error: {mse}")
+print(f"R^2: {r2}")
+```
 ## Analysis Rationale
 When reading in the data from the tables, as I was using DuckDB I just read in the CSVs, as it infers the column name and types. I then created a primary key for each table which would later help with querying and eliminating duplicates. For the events table, I was repeatedly encountering issues with repeat rows with the same id, so I decided to select only one of them by choosing one with the earliest start. In order to combine the events and incidents table, I created a junction table which took in the eventID and incidentID from the events and incidents table, and then joined them on the locationtimeID. Since these would have a many to many relationship, at one given call time there can be many events occurring, and at the time of one event there can be many calls happening, a junction table would help with this. Since they would need to overlap on both time and location, I created a locationtimeID to just have one row overlapping. For the final query, I joined the weather on the locationtimeID, but did not need a junction table since this was not a many to many relationship. I created a dataframe that aggregated the total number of incidents for each day and borough. I then used this dataframe to train the predictive model.
-For this problem, I decided to solve it with a random forest. As I knew I wanted it to be predictive, I would have to do some algorithm that could return a prediction output based on data it was trained on. The output variable, the number of ems calls, was also numeric, so I knew I would need a model with a numeric output, not a category or binary output. I also considered creating a linear regression, however I did not think that the number of calls would have a direct linear relationship with the variables and there would instead be more complex relationships and interactions. I figured that a random forest could help with these nonlinear experiences and with the combination of categorical and numeric features that would be significant. Given that the end metrics of this were good, the R^2 was high, I decided that this was a good model for this task and sufficiently solved the problem.
+For this problem, I decided to solve it with a random forest. As I knew I wanted it to be predictive, I would have to do some algorithm that could return a prediction output based on data it was trained on. The output variable, the number of ems calls, was also numeric, so I knew I would need a model with a numeric output, not a category or binary output. I also considered creating a linear regression, however I did not think that the number of calls would have a direct linear relationship with the variables and there would instead be more complex relationships and interactions. I figured that a random forest could help with these nonlinear experiences and with the combination of categorical and numeric features that would be significant. The initial R^2 value was quite high, showing that the model had good predictions, however I decided to also do some hyperparameter training to further optimize the model. I used GridSearch for CrossValidation to tune the hyperparameters of max depth and max features and then found the optimal parameters and ran a model using these, which had increased predictive accuracy and lower error.    
 
 ## Visualization
 ```
