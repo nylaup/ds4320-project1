@@ -4,7 +4,7 @@ Name: Nyla Upal
 NetID: mge9dn     
 Press Release: [Press Release File](https://github.com/nylaup/ds4320-project1/blob/main/PressRelease.md)     
 Data: [Data Folder](https://myuva-my.sharepoint.com/:f:/g/personal/mge9dn_virginia_edu/IgC6wpB5VoZrSaNl7BUKjM_7AXOBHNlLw-Pnpqv3Uem2Bsg?e=o4zhK4)     
-Pipeline:     
+Pipeline: [Solution Pipeline](https://github.com/nylaup/ds4320-project1/blob/main/SolutionPipeline.ipynb)     
 License: [MIT License](https://github.com/nylaup/ds4320-project1/blob/main/LICENSE)    
 
 ## Problem Definition
@@ -53,14 +53,14 @@ In order to mitigate the bias, you can identify which year for each datapoint so
 (NNU FIX) In order to solve the problem of predicting EMS calls, I had to do some judgement calls of what factors I thought might be important and would influence the model. I decided to look at demographics, weather, and events as these were all publicly accessible and made sense. Given the datasets, I also decided to only look at one year, and to focus on 2025 as that would give recent and applicable information. As there were too many calls in the timeframe of one year, I decided to shorten this to just three months, from January to March, to make this dataset creation feasible.     
 
 ## Metadata  
-![ERD](images/ems.png)   
+![ERD](images/ERD.png)   
 #### Data Tables 
 | Table | Description | Link |
 | :--- | :--- | :--- |
-| EMS Incidents | EMS calls with information on location | https://myuva-my.sharepoint.com/:x:/g/personal/mge9dn_virginia_edu/IQChxf14yfHKT7SwUXKo-eT5AYEeQsjkUh7NJflaTGMejoA |
-| Weather | Weather information for boroughs by hour | https://myuva-my.sharepoint.com/:x:/g/personal/mge9dn_virginia_edu/IQB3PpuKpOBQSZ6zxpsz1YXcARF89PyEFdxU8Wqq_uHyHoQ?e=HURIKe |
-| NYC Events | Information on scheduled events in NYC | https://myuva-my.sharepoint.com/:x:/g/personal/mge9dn_virginia_edu/IQBYiUPJ5sqmSpBV8QQ1AvutAe_Io1xZUSp_Kf7UfwejNM4?e=Iaty4H |
-| Demographics | Demographic information for NYC boroughs | https://myuva-my.sharepoint.com/:x:/g/personal/mge9dn_virginia_edu/IQATGgL_qTU9RbNhMWB0nVCBAeRv70jNtv0gm9ab_0BkDxs?e=9EITpA |      
+| EMS Incidents | EMS calls with information on location | [Link](https://myuva-my.sharepoint.com/:x:/g/personal/mge9dn_virginia_edu/IQChxf14yfHKT7SwUXKo-eT5AYEeQsjkUh7NJflaTGMejoA) |
+| Weather | Weather information for boroughs by hour | [Link](https://myuva-my.sharepoint.com/:x:/g/personal/mge9dn_virginia_edu/IQB3PpuKpOBQSZ6zxpsz1YXcARF89PyEFdxU8Wqq_uHyHoQ?e=HURIKe) |
+| NYC Events | Information on scheduled events in NYC | [Link](https://myuva-my.sharepoint.com/:x:/g/personal/mge9dn_virginia_edu/IQBYiUPJ5sqmSpBV8QQ1AvutAe_Io1xZUSp_Kf7UfwejNM4?e=Iaty4H) |
+| Demographics | Demographic information for NYC boroughs | [Link](https://myuva-my.sharepoint.com/:x:/g/personal/mge9dn_virginia_edu/IQATGgL_qTU9RbNhMWB0nVCBAeRv70jNtv0gm9ab_0BkDxs?e=9EITpA) |      
         
 EMS Incidents Data
 | Name | Data Type | Description | Example |      
