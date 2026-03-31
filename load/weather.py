@@ -3,6 +3,7 @@ import pandas as pd
 import time
 import logging
 
+#create logger 
 logging.basicConfig(
     level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s',
     filename='weather.log'
@@ -49,17 +50,23 @@ for borough, (lat, lon) in BOROUGH_COORDS.items():
             "weathercode": data["hourly"]["weathercode"],
             "borough": borough
         })
-        df["datetime"] = df["datetime"].dt.tz_localize(None)
+        df["datetime"] = df["datetime"].dt.tz_localize(None) #localize timezone to match for joining 
         logger.info(f"{borough}: {df.shape[0]:,} rows fetched") 
         weather_dfs.append(df)
-        time.sleep(1)
+        time.sleep(1) #delay API querying 
 
     except Exception as e:
         logger.error(f"Failed to fetch weather for {borough}: {e}")
         print(f"Failed to fetch weather for {borough}: {e}")
-        continue  # skip failed borough, don't crash entire script
+        continue 
 
-weather_df = pd.concat(weather_dfs, ignore_index=True)
-weather_df.index.name = "weather_id" 
+weather_df = pd.concat(weather_dfs, ignore_index=True) #combine dfs for all boroughs
+#standardize borough names 
+weather_df["borough"] = weather_df["borough"].astype(str).str.strip().str.upper()
+#create locationtimeID for joining 
+weather_df['locationtimeID'] = weather_df['borough'] + '_' + weather_df['datetime'].astype(str)
+#drop duplicates with primary key 
+weather_df = weather_df.drop_duplicates(subset=['locationtimeID'], keep='first')
 
+#write to csv 
 weather_df.to_csv('data/Weather.csv', index=False)
