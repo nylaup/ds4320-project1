@@ -11,9 +11,9 @@ logger = logging.getLogger(__name__)
 ```
 ## Data Preparation
 ```
-con = duckdb.connect('nyc_ems.duckdb') #connect to database 
+con = duckdb.connect('nyc_ems.duckdb')
 con.execute("""
-    --- create table of demoraphics from csv 
+    --- create table of demographics from csv 
     CREATE TABLE IF NOT EXISTS demographics AS
     SELECT * FROM read_csv_auto('data/Demographics.csv');
     ALTER TABLE demographics ADD PRIMARY KEY (region_name);
@@ -25,10 +25,10 @@ con.execute("""
     CREATE TABLE IF NOT EXISTS events AS
     SELECT * FROM ( 
         SELECT *,
-           ROW_NUMBER() OVER (PARTITION BY event_id ORDER BY start_date_time ASC) AS rn
-        FROM read_csv_auto('data/NYC_Events.csv')) sub
+           ROW_NUMBER() OVER (PARTITION BY id ORDER BY start_date_time ASC) AS rn
+        FROM read_csv_auto('data/NYC_Events2.csv')) sub
     WHERE rn = 1;
-    ALTER TABLE events ADD PRIMARY KEY (event_id);
+    ALTER TABLE events ADD PRIMARY KEY (id);
 """)
 logger.info("Created events table")
 
@@ -41,20 +41,24 @@ con.execute("""
 logger.info("Created weather table")
 
 con.execute("""
-    --- create table of incidents from incident csv 
+    --- create table of incidents from incident csv, keeping only one incident id
     CREATE TABLE IF NOT EXISTS incidents AS
-    SELECT * FROM read_csv_auto('data/EMS_Incidents.csv');
-    ALTER TABLE incidents ADD PRIMARY KEY (cad_incident_id);
+    SELECT * FROM ( 
+        SELECT *,
+            ROW_NUMBER() OVER (PARTITION BY cad_incident_id ORDER BY incident_datetime ASC) AS rn
+        FROM read_csv_auto('data/EMS_Incidents.csv')) sub
+    WHERE rn = 1;
+    ALTER TABLE incidents ADD PRIMARY KEY (cad_incident_id);        
 """)
 logger.info("Created incidents table")
 
 con.execute("""
     --- create junction table linking events and incidents by locationtimeID 
     CREATE TABLE IF NOT EXISTS eventjunction AS
-    SELECT e.event_id, e.locationtimeID, i.cad_incident_id
+    SELECT e.id, e.locationtimeID, i.cad_incident_id
     FROM events e
     JOIN incidents i ON e.locationtimeID = i.locationtimeID;
-    ALTER TABLE eventjunction ADD PRIMARY KEY (event_id, locationtimeID);
+    ALTER TABLE eventjunction ADD PRIMARY KEY (id, locationtimeID);
 """)
 logger.info("Created event junction table")
 con.close()
@@ -72,7 +76,7 @@ df = con.execute("""
         COUNT(c.cad_incident_id) as total_calls,
         AVG(w.temperature) as avg_temp,
         AVG(w.weathercode) as weathercode,
-        COUNT(DISTINCT e.event_id) as num_events,
+        COUNT(DISTINCT e.id) as num_events,
         AVG(crime_viol_rt) as violent_crime_rate,
         AVG(hh_inc_med_adj) as household_income,
         AVG(hh_u18_pct) as pct_under_18,
@@ -83,7 +87,7 @@ df = con.execute("""
     LEFT JOIN eventjunction ej
         ON c.cad_incident_id = ej.cad_incident_id
     LEFT JOIN events e
-        ON ej.event_id = e.event_id
+        ON ej.id = e.id
     LEFT JOIN demographics d ON c.borough = d.region_name
     GROUP BY c.incident_datetime::DATE, c.borough;
 """).fetchdf()
@@ -176,7 +180,7 @@ plt.title(f"Predicted Ambulance Demand by Borough ({target_date})")
 plt.axis("off")
 plt.show()
 ```
-![Map](images/map.png)
+![Map](images/chart.png)
 
 ## Visualization Rationale
 For the visualization for this project, initially I was unsure how I wanted to demonstrate the success of this data pipeline. Since the goal of this project was predicting the number of ambulance calls, I wanted to create some visual that could show this. The data is about locations in New York City, which lends this to a map being used. For the visual I decided to pick a random date and then use the model to predict the amount of EMS calls that will be called for each borough of New York. This visual will then show the model's predicted ambulance demand for each borough, showing how the model draws on borough specific information and the training data in order to predict the relationship between the date and borough with the amount of EMS calls. In order to have a map of New York City and shapes of the boroughs, I needed to import geopandas and geodatasets. Initially I noticed there were issues with the dataset not having Staten Island, until I realized the dataset had it saved as Richmond/Staten Island while the geofiles did not, so I decided to replace the dataset with just Staten Island so the mapping would work. Because the project pertains to health, I decided to make the color palette be red, as that is a color often affiliated with hospitals, and that is a readable color for viewers.

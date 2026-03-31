@@ -36,6 +36,8 @@ try:
     neighborhood = neighborhood.drop_duplicates(subset=['region_name', 'year'], keep='first')
     #standardize neighborhood names
     neighborhood["region_name"] = neighborhood["region_name"].astype(str).str.strip().str.upper()
+        #change staten island name to match incidents table
+    neighborhood["region_name"] = (neighborhood["region_name"].str.replace("STATEN ISLAND","RICHMOND / STATEN ISLAND"))
 
     #write to csv file 
     neighborhood.to_csv('data/Demographics.csv', index=False)

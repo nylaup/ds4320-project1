@@ -12,16 +12,16 @@ logger = logging.getLogger(__name__)
 
 #coordinates for boroughs of NYC to query 
 BOROUGH_COORDS = {
-    "Manhattan":     (40.7831, -73.9712),
-    "Brooklyn":      (40.6782, -73.9442),
-    "Queens":        (40.7282, -73.7949),
-    "Bronx":         (40.8448, -73.8648),
-    "Staten Island": (40.5795, -74.1502),
+    "MANHATTAN": (40.7831, -73.9712),
+    "BROOKLYN": (40.6782, -73.9442),
+    "QUEENS": (40.7282, -73.7949),
+    "BRONX": (40.8448, -73.8648),
+    "RICHMOND / STATEN ISLAND": (40.5795, -74.1502),
 }
 
 #set timeframe 
-START_DATE = "2016-01-01"
-END_DATE   = "2017-12-31"
+START_DATE = "2013-01-01"
+END_DATE   = "2019-12-31"
 
 #empty dataframe
 weather_dfs = []

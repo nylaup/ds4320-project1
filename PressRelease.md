@@ -1,6 +1,6 @@
 # How many ambulances do we need? Using prediction to optimize ambulance allocation    
 ## Given the importance of needing ambulances to address emergency health situations, using algorithms to optimize allocation will help improve public health.  
 ## Often ambulances are dispatched from rescue squad stations, which often leads to late arrivals to the scene, but sometimes are at locations where events are planned or expected in case of need. The problem is that ambulances often have to face traffic and great distances from events to get where they need to get, and if they were able to be strategically placed to predict where they will be most needed, this could improve efficiency. 
-## (NNU FIX) This solution uses a random forest algorithm to predict the amount of ambulance calls that will occur for a given borough on a certain day based on information from prior incidences. Specifically we analyze demographic information of boroughs, city events, and weather. 
+## This solution uses a random forest algorithm to predict the amount of ambulance calls that will occur for a given borough on a certain day based on information from prior incidences. Specifically we analyze demographic information of boroughs, city events, and weather. The algorithm predicts the amount of calls that will happen at a certain borough on that day, which can then help with better allocating resources and agencies being prepared to handle emergencies occurring, to then improve overall health outcomes. 
 ## Chart 
-![Map](images/map.png)
+![Map](images/chart.png)

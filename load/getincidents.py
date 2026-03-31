@@ -28,8 +28,8 @@ client = Socrata(
 )
 
 #set timeframe and batches for querying and writing to CSV 
-START_DATE = "2016-01-01T00:00:00"
-END_DATE   = "2017-12-31T23:59:59"
+START_DATE = "2013-01-01T00:00:00"
+END_DATE   = "2019-12-31T23:59:59"
 BATCH_SIZE = 50000
 CHUNK_SIZE = 500000  
 
