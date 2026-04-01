@@ -2,7 +2,7 @@
 This repository contains materials for a project for DS4320 Data by Design on predicting ambulance demand for allocating emergency response resources.    
 Name: Nyla Upal      
 NetID: mge9dn     
-DOI: [![DOI](https://zenodo.org/badge/1188435188.svg)](https://doi.org/10.5281/zenodo.19343840)      
+DOI: [![DOI](https://zenodo.org/badge/1188435188.svg)](https://doi.org/10.5281/zenodo.19363415)      
 Press Release: [Press Release File](https://github.com/nylaup/ds4320-project1/blob/main/PressRelease.md)     
 Data: [Data Folder](https://myuva-my.sharepoint.com/:f:/g/personal/mge9dn_virginia_edu/IgC6wpB5VoZrSaNl7BUKjM_7AXOBHNlLw-Pnpqv3Uem2Bsg?e=o4zhK4)     
 Pipeline: [Solution Pipeline](https://github.com/nylaup/ds4320-project1/tree/main/pipeline)     
