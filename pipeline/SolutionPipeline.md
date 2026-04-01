@@ -217,7 +217,7 @@ plt.title(f"Predicted Ambulance Demand by Borough ({target_date})")
 plt.axis("off")
 plt.show()
 ```
-![Map](images/chart.png)
+![Map](../images/chart.png)
 
 ## Visualization Rationale
 For the visualization for this project, initially I was unsure how I wanted to demonstrate the success of this data pipeline. Since the goal of this project was predicting the number of ambulance calls, I wanted to create some visual that could show this. The data is about locations in New York City, which lends this to a map being used. For the visual I decided to pick a random date and then use the model to predict the amount of EMS calls that will be called for each borough of New York. This visual will then show the model's predicted ambulance demand for each borough, showing how the model draws on borough specific information and the training data in order to predict the relationship between the date and borough with the amount of EMS calls. In order to have a map of New York City and shapes of the boroughs, I needed to import geopandas and geodatasets. Initially I noticed there were issues with the dataset not having Staten Island, until I realized the dataset had it saved as Richmond/Staten Island while the geofiles did not, so I decided to replace the dataset with just Staten Island so the mapping would work. Because the project pertains to health, I decided to make the color palette be red, as that is a color often affiliated with hospitals, and that is a readable color for viewers.
