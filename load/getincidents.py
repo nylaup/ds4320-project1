@@ -40,7 +40,8 @@ def write_chunk_csv(buffer, columns, path, write_header=True):
 
     #cast datetime columns to pandas datetime 
     for col in ['incident_datetime', 'incident_close_datetime']:
-        df[col] = pd.to_datetime(df[col], errors='coerce')
+        df[col] = pd.to_datetime(df[col], errors='coerce'),
+        df[col] = df[col].dt.round('h')
 
     #ensure columns are existing 
     for c in columns:

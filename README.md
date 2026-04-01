@@ -19,12 +19,14 @@ The motivation for this project is that oftentimes emergencies are unpredictable
 | Terms | Definition |     
 | :--- | :--- |      
 | Demand Forecasting | Using historical data to predict future demand |     
-| Response time | The duration between a call and the emergency vehicle arrival |
-| MSE | Mean Squared Error measuring difference between predicted <br> and actual values |
+| R^2^ | A measure representing the proportion of the output explained by the model |
+| MSE | Mean Squared Error measuring difference between predicted and actual values |
 | Allocation Plans | A proposal for distributing resources that are limited |
-| MPDS | Medical Priority Dispatch System is the standard used in <br> emergency dispatch prioritization |  
-| Time Series | Modeling tool that looks at data collected over time |
-| Dispatch | Systematic process of getting emergency calls and assigning <br> medical resources |              
+| MPDS | Medical Priority Dispatch System is the standard used in emergency dispatch prioritization |    
+| Weather Code | Used by Open Meteo API to encode weather type |
+| Random Forest | Machine Learning Model that uses many decision trees to create an output |
+| Cross Validation | Used to assess Machine Learning models performance on new data and improve fit |
+| Dispatch | Systematic process of getting emergency calls and assigning medical resources |             
           
              
 
@@ -51,7 +53,7 @@ In order to access all the data to create four tables, I used three files to pul
 | NYC Events | Events happening in New York City with details<br> on location and time | https://github.com/nylaup/ds4320-project1/blob/main/load/events.py |           
            
                
-Identifying potential biases in this dataset, demographic data by borough was difficult to find, and the csv I found had information from various years, but as I assumed these demographics would not change drastically from year to year I didn't think it would significantly add to the model to have to get separate demographics for each year. It is possible that this could introduce some bias to the model to have outdated information.  These demographics are also borough wide, which may not give the best depiction of individual variation in the neighborhood and assumptions have to be made on these aggregations. With the EMT calls data, EMT calls may not encapsulate all emergencies and are only a very specific sample of people who call emergency services. The weather information only looks at one coordinate in the borough and generalizes for the whole hour. The events dataset is based on events that were registered, which ignores unexpected events that may cause emergencies. For the events, in order to best link them with the incidents, I had the connection on the start time, which may not be the most applicable as events are often ongoing, which may lead to some bias if hour level aggregation is done to see how many events were occurring at the time of a call, it will only show how many events started at that time.       
+Identifying potential biases in this dataset, demographic data by borough was difficult to find, and the csv I found had information from various years, but as I assumed these demographics would not change drastically from year to year I didn't think it would significantly add to the model to have to get separate demographics for each year. It is possible that this could introduce some bias to the model to have outdated information.  These demographics are also borough wide, which may not give the best depiction of individual variation in the neighborhood and assumptions have to be made on these aggregations. With the EMT calls data, EMT calls may not encapsulate all emergencies and are only a very specific sample of people who call emergency services. The weather information only looks at one coordinate in the borough and generalizes for the whole hour. The events dataset is based on events that were registered, which ignores unexpected events that may cause emergencies. For the events, in order to best link them with the incidents, I had the connection on the start time, which may not be the most applicable as events are often ongoing, which may lead to some bias as it only looks at the hour of the event start time and not its full occurence.       
 In order to mitigate the bias with demographics, interpretation of the results should acknowledge potential outdated information. When making claims at the borough level, one should be aware this is a large generalization. Making claims from the EMS calls should be limited to just EMS calls and not generalized for all emergencies. Be aware there may be some error with weather not being entirely accurate to the exact location and time of incident, and that there may be some unregistered events the dataset does not cover. In order to mitigate the bias with the event times, the final analysis looks at a daily aggregation, which should avoid the issues of the exact hour of an event starting not reflecting the duration throughout the day, as it counts for the whole day.              
 In order to solve the problem of predicting EMS calls, I had to do some judgement calls of what factors I thought might be important and would influence the model. I decided to look at demographics, weather, and events as these were all publicly accessible and made sense based on the background readings and what would affect the amount of EMS calls happening. In order to get a proper scope of the data, I decided to select six years to analyze. I didn't want to use recent data, as it may not yet be available for some sources and I did not want inconsistencies. I also chose to avoid years that would be affected by the COVID-19 pandemic, as those caused irregularities in health systems. For these reasons I chose to query data from 2013 to 2019, which was enough data that it was feasible to load and process, and it also gave a sufficient amount of data for the model to learn from. When selecting the variables, I also had to use some judgement in variables that I thought would be significant or impactful, or at least would want to input into the model to see how impactful they would be to the prediction. For borough demographics, I decided to go with features on income, age, and crimes, as these are features that could be related to various things that cause emergencies. For events, as I was adding the data to tables I noticed there was repetitive event IDs, so I dropped duplicates based on events with the same name that had the same location and time. I also had to then create my own id to use as a primary key, since that was needed for the relational database but the existing eventID was not sufficient.                   
 
@@ -69,25 +71,23 @@ EMS Incidents Data
 | Name | Data Type | Description | Example |      
 | :--- | :--- | :--- | :--- |
 | CAD_Incident_ID | Num | Unique indentifier for each incident | 160010002 |
-| Incident_DateTime | DateTime | Date and time of initial call | 01/01/2016 12:00:37 |
+| Incident_DateTime | DateTime | Date and time of initial call, rounded to hour | 01/01/2016 12:00:00 |
 | Incident_Close_DateTime | DateTime | Date and time of call ending | 01/01/2016 12:50:37 |
 | Borough | Cat | New York City borough of incident | BRONX |
 | Initial_Call_Type | Cat | Type of emergency call it was first classified by dispatch when the call was received | SICK |
 | Final_Call_Type | Cat | Type of emergency call after responders evaluated the scene | INJURY |
 | Zipcode | Num | New York City borough of incident | 11201 |
-| LocationTimeID | Cat | Key used for junction table and joining, with location, date, date time of incident | BROOKLYN_2016-01-01 00:00:17 |
+| LocationTimeID | Cat | Key used for junction table and joining, with location, date, hour of incident | BROOKLYN_2016-01-01 00:00:00 |
 
 Events Data
 | Name | Data Type | Description | Example |      
 | :--- | :--- | :--- | :--- |
-| ID | Num | Unique identifier for each event  | 000006 |
-| EventID | Num | Grouping for associated events with differing times/location | 808651 | 
-| Start_Date_Time | DateTime | Date and time of event start | 07/26/2025 08:00:00 AM |
-| End_Date_Time | DateTime | Date and time of event end | 10/10/2025 11:59:00 PM |
+| EventID | Num | Unique identifier for each event | 808651 |
+| Start_Date_Time | DateTime | Date and time of event start, rounded to hour | 07/26/2025 08:00:00 |
 | Event_Type | Cat | Categorization of event type | Special Event |
 | Event_Borough | Cat | NYC borough of event | QUEENS |
 | Event_Name | Cat | Name the event was registered as | Rehab of Lawn |
-| LocationTimeID | Cat | Key used for junction table and joining. Location, date, and time of incident | MANHATTAN_2016-01-01 00:00:00 |
+| LocationTimeID | Cat | Key used for junction table and joining. Location, date, and hour of incident | MANHATTAN_2016-01-01 00:00:00 |
 
 Demographics
 | Name | Data Type | Description | Example |      
@@ -109,4 +109,4 @@ Weather
 | WeatherCode | Num | Codes for severe weather event | 2 | 
 | LocationTimeID | Cat | Location, date, and time of weather, used to join with incidents | QUEENS_2017-03-29 01:00:00 |        
             
-Quantifying uncertainty for the incidents table, there is no uncertainty in the numeric id or the zip code, and the start datetime is autogenerated by the computerized system receiving calls, so the only chance for error there is in the machine reading times. Given that the call times are recorded to the very second, is possible that there is a slight uncertainty in the recording time of +- 1 second. For the close time, I would say this has slightly more uncertainty as it may take some time to report the incident as being closed, or even though the event is reported closed there could still be ongoing issues, so I would report this as +- 5 minutes. For the events, the id is generated to be unique for each event so there is no uncertainty in this. Since the start and end times are reported by the user, I would assume there is +- 10 minutes to account for people's delay in actually starting and ending events compared to the planned times. For the weather, since we are generalizing to the hour and one coordinate for each borough, there is some uncertainty on the exact weather for the incident's specific location and time, as well as some potential for error with weather readings, so for temperature there is an uncertainty of +-1 to 3 degrees. The weather code values are very specific to the different weather incident, so there is no uncertainty. For the demographic information, there is the potential for inaccuracies with census data collection for most of the variables. Based on the distribution, I would guess the violent crime rate has an uncertainty of +-0.5, household mean income +-100, percent under 18 +-1, percent above 65 +-0.5, and population +-1000.    
+Quantifying uncertainty for the incidents table, there is no uncertainty in the numeric id or the zip code. Since we rounded the start datetime to the nearest hour, for all of these there is +- 59 minutes. Given that the call times are recorded to the very second, is possible that there is a slight uncertainty in the recording time of +- 1 second. For the close time, I would say this has slightly more uncertainty as it may take some time to report the incident as being closed, or even though the event is reported closed there could still be ongoing issues, so I would report this as +- 5 minutes. For the events, the id is generated to be unique for each event so there is no uncertainty in this. Since we rounded the event start times to the nearest hour, there is +-59 minutes uncertainty. For the weather, since we are generalizing to the hour and one coordinate for each borough, there is some uncertainty on the exact weather for the incident's specific location and time, as well as some potential for error with weather readings, so for temperature there is an uncertainty of +-1 to 3 degrees. The weather code values are very specific to the different weather incident, so there is no uncertainty. For the demographic information, there is the potential for inaccuracies with census data collection for most of the variables. Based on the distribution, I would guess the violent crime rate has an uncertainty of +-0.5, household mean income +-100, percent under 18 +-1, percent above 65 +-0.5, and population +-1000.    

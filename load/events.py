@@ -43,15 +43,15 @@ def write_chunk_csv(buffer, start_id, write_header=True):
     df = pd.DataFrame.from_records(buffer)
 
     #columns to read in 
-    columns = ['event_id', 'start_date_time', 'end_date_time','event_type', 'event_borough', 'event_name']
+    columns = ['event_id', 'start_date_time','event_type', 'event_borough', 'event_name']
     for c in columns:
         if c not in df.columns:
             df[c] = pd.NA
     df = df[columns]
 
-    #convert datetimes 
-    for col in ['start_date_time', 'end_date_time']:
-        df[col] = pd.to_datetime(df[col], errors='coerce')
+    #convert datetimes and round to nearest hour 
+    df['start_date_time'] = pd.to_datetime(df['start_date_time'], errors='coerce')
+    df['start_date_time'] = df['start_date_time'].dt.round('h')
     #standardize borough names 
     df["event_borough"] = df["event_borough"].astype(str).str.strip().str.upper()
     #change staten island name to match incidents table 

@@ -1,8 +1,12 @@
 ## Imports & Initialization 
 ```
+#necessary imports to start 
 import duckdb
 import pandas as pd
 import logging
+```
+```
+#initialize logging 
 logging.basicConfig(
     level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s',
     filename='pipeline.log'
@@ -53,12 +57,14 @@ con.execute("""
 logger.info("Created incidents table")
 
 con.execute("""
-    --- create junction table linking events and incidents by locationtimeID 
+    --- create junction table linking events and incidents by locationtimeID with generated primary key
     CREATE TABLE IF NOT EXISTS eventjunction AS
-    SELECT e.id, e.locationtimeID, i.cad_incident_id
+    SELECT 
+        ROW_NUMBER() OVER () AS eventjunction_id,  
+        e.id, e.locationtimeID, i.cad_incident_id
     FROM events e
     JOIN incidents i ON e.locationtimeID = i.locationtimeID;
-    ALTER TABLE eventjunction ADD PRIMARY KEY (id, locationtimeID);
+    ALTER TABLE eventjunction ADD PRIMARY KEY (eventjunction_id);
 """)
 logger.info("Created event junction table")
 con.close()
