@@ -24,10 +24,9 @@ The motivation for this project is that oftentimes emergencies are unpredictable
 | Terms | Definition |     
 | :--- | :--- |      
 | Demand Forecasting | Using historical data to predict future demand |     
-| R^2^ | A measure representing the proportion of the output explained by the model |
+| R^2 | A measure representing the proportion of the output explained by the model |
 | MSE | Mean Squared Error measuring difference between predicted and actual values |
-| Allocation Plans | A proposal for distributing resources that are limited |
-| MPDS | Medical Priority Dispatch System is the standard used in emergency dispatch prioritization |    
+| Allocation Plans | A proposal for distributing resources that are limited |    
 | Weather Code | Used by Open Meteo API to encode weather type |
 | Random Forest | Machine Learning Model that uses many decision trees to create an output |
 | Cross Validation | Used to assess Machine Learning models performance on new data and improve fit |
