@@ -1,5 +1,5 @@
 # DS 4320 Project 1: EMS Demand Prediction
-This repository contains materials for a project for DS4320 Data by Design on predicting ambulance demand for allocating emergency response resources.    
+This repository contains materials for a project for DS4320 Data by Design on predicting ambulance demand. It queries data from APIs to create data files, then contains a pipeline that reads them into a relational duckdb table and creates a model to predict ambulance demand.    
 Name: Nyla Upal      
 NetID: mge9dn     
 DOI: [![DOI](https://zenodo.org/badge/1188435188.svg)](https://doi.org/10.5281/zenodo.19363415)      
@@ -29,7 +29,8 @@ The motivation for this project is that oftentimes emergencies are unpredictable
 | Allocation Plans | A proposal for distributing resources that are limited |    
 | Weather Code | Used by Open Meteo API to encode weather type |
 | Random Forest | Machine Learning Model that uses many decision trees to create an output |
-| Cross Validation | Used to assess Machine Learning models performance on new data and improve fit |
+| Cross Validation | Used to assess Machine Learning models performance on new data and improve fit |   
+| Borough | The five districts in New York City |
 | Dispatch | Systematic process of getting emergency calls and assigning medical resources |             
           
              
