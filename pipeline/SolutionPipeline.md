@@ -71,6 +71,14 @@ con.close()
 ```
 ## Query
 ```
+#check that tables were created successfully
+con = duckdb.connect('nyc_ems.duckdb') 
+con.execute("SHOW TABLES").fetchdf()
+con.close()
+```
+
+
+```
 con = duckdb.connect('nyc_ems.duckdb') 
 
 df = con.execute("""
@@ -100,6 +108,11 @@ df = con.execute("""
 
 con.close()
 ```
+```
+#dataframe to use to train model 
+df.head()
+```
+
 ## Solution Analysis
 ```
 from sklearn.model_selection import GridSearchCV
@@ -136,15 +149,15 @@ print(f"R^2: {r2}")
 ```
 #create param grid for hyperparameter tuning with gridsearch 
 param_grid = {
-    'max_depth': [None, 10, 20],
-    'max_features': [2, 3, 4]
+    'max_depth': [5, 10, 20, None],
+    'max_features': ['sqrt', 'log2', None]
 }
 
 #gridsearch to find optimal hyperparameters 
 grid_search = GridSearchCV(
-    estimator=RandomForestRegressor(random_state=42),
+    estimator=RandomForestRegressor(random_state=42, n_estimators=100),
     param_grid=param_grid,
-    cv=5, 
+    cv=3, 
     scoring='neg_mean_squared_error'
 )
 
@@ -166,10 +179,12 @@ For this problem, I decided to solve it with a random forest. As I knew I wanted
 
 ## Visualization
 ```
+#imports for creating plot  
 import geopandas as gpd
 from geodatasets import get_path
 import matplotlib.pyplot as plt
-
+```
+```
 target_date = "2016-08-21"
 
 boroughs = ["MANHATTAN", "BROOKLYN", "QUEENS", "BRONX", "STATEN ISLAND"]
